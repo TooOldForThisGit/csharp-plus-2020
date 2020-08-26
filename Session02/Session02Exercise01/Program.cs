@@ -8,6 +8,8 @@ namespace Session02Exercise01
         {
             Console.WriteLine("Hello World!");
             Console.WriteLine("Hello World!");
+            Console.WriteLine("Hello World!");
+
 
             Console.ReadLine();
 
