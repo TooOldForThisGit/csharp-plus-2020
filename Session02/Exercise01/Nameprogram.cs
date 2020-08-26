@@ -18,7 +18,6 @@ namespace Exercise01
             Console.WriteLine("Hello, " + name);
             Console.ReadKey();
 
-
         }
     }
 }
