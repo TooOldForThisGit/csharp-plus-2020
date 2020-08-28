@@ -14,9 +14,6 @@ namespace Session02Exercise01
             Console.WriteLine("Integer is: " + integer);
             Console.WriteLine("value of my stringvalue: " + stringValue);
 
-
-
-
         }
     }
 }
