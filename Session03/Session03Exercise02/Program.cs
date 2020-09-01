@@ -19,7 +19,7 @@ namespace Session03Exercise02
                 Console.WriteLine(line);
 
                 var inputStringArray = Console.ReadLine().Split(',', StringSplitOptions.RemoveEmptyEntries);//new [] för FrameWork 
-                List<double> numbersArray = new List<double>(); //A list so I dont need to sort unparsed values in for
+                List<double> numbersList = new List<double>(); //A list so I dont need to sort unparsed values in for
 
                 double sum = 0;
                 double maxValue;
@@ -28,7 +28,7 @@ namespace Session03Exercise02
                 int parseNumberCount = 0; //counter for divison with sum for middlevalue
 
                 Console.WriteLine(line);
-                //Inputhandler
+                //Input
                 for (int i = 0; i < inputStringArray.Length; i++)
                 {
                     var label = "Värdet är:";
@@ -43,7 +43,7 @@ namespace Session03Exercise02
                             continue;
                         else //Add elements to list and
                         {
-                            numbersArray.Add(currentNumber);
+                            numbersList.Add(currentNumber);
                             sum += currentNumber;
                             ++parseNumberCount;//Perhaps exsessive in this stage
                         }
@@ -58,15 +58,15 @@ namespace Session03Exercise02
 
                 }
                 //Assigning highest and smallest value if element in list is not zero
-                if (numbersArray.Count != 0)
+                if (numbersList.Count != 0)
                 {
-                    maxValue = numbersArray.Max();
-                    minValue = numbersArray.Min();
+                    maxValue = numbersList.Max();
+                    minValue = numbersList.Min();
 
                     //Printing out evaluated values
                     Console.WriteLine(line); Console.WriteLine();
-                    Console.WriteLine($"Högsta värdet: {numbersArray.Max()}");//Max value  
-                    Console.WriteLine($"Minsta värdet: {numbersArray.Min()}");//Min value
+                    Console.WriteLine($"Högsta värdet: {maxValue}");//Max value  
+                    Console.WriteLine($"Minsta värdet: {minValue}");//Min value
                     Console.WriteLine("Medelvärdet för arrayen är: " + string.Format($"{(sum / parseNumberCount):0.00}")); //Middle value
                 }
                 else Console.WriteLine("Här har det inte skrivits in nått värde alls. Försök igen!");//ERROR message
