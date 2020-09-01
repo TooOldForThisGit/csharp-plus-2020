@@ -1,5 +1,6 @@
-﻿        
+﻿
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -8,57 +9,71 @@ namespace Session03Exercise02
 {
     class Program
     {
+        static string line = "--------------------------------------------------------------";
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Ange ett antal siffron, separat med kommatecken.");
-            var input = Console.ReadLine();
-
-            var inputArray = input.Split(',', StringSplitOptions.RemoveEmptyEntries);//new [] för FrameWork 
-            foreach (var number in inputArray)
+            while (true)//Forever and ever n ever
             {
-                Console.WriteLine("Värdet är " + number);
-            }
+                Console.WriteLine("Ange ett antal siffror, separat med kommatecken.");
+                Console.WriteLine(line);
 
-            Console.ReadKey();
-            
-            Console.WriteLine("Ange ett antal siffror, separat med kommatecken.");
-            var inputNumber = Console.ReadLine();
+                var inputStringArray = Console.ReadLine().Split(',', StringSplitOptions.RemoveEmptyEntries);//new [] för FrameWork 
+                List<double> numbersArray = new List<double>(); //A list so I dont need to sort unparsed values in for
 
-            var inputStringArray = inputNumber.Split(',', StringSplitOptions.RemoveEmptyEntries);//new [] för FrameWork 
-            var numbers = new double[inputStringArray.Length];
-            double middlevalue = 0;
+                double sum = 0;
+                double maxValue;
+                double minValue;
 
-            //while()
-            for (int i = 0; i < inputStringArray.Length; i++)
-            {
-                Console.WriteLine("Värdet är:".PadRight(14) + inputStringArray[i]);
-                try
+                int parseNumberCount = 0; //counter for divison with sum for middlevalue
+
+                Console.WriteLine(line);
+                //Inputhandler
+                for (int i = 0; i < inputStringArray.Length; i++)
                 {
-                    double currentNumber = 0;
-                    NumberStyles numberStyles = NumberStyles.Any | NumberStyles.Float; //bitwiseoperator
-                    bool parsed  = Double.TryParse(inputStringArray[i], numberStyles, CultureInfo.InvariantCulture, out currentNumber);
-                    if (parsed)
+                    var label = "Värdet är:";
+                    var paddedLabel = label.PadRight(14);
+
+                    try
                     {
-                        numbers[i] = currentNumber;
-                        middlevalue += currentNumber;
+                        double currentNumber;
+                        NumberStyles numberStyles = NumberStyles.Any | NumberStyles.Float; //bitwiseoperator
+                        bool parsed = double.TryParse(inputStringArray[i], numberStyles, CultureInfo.InvariantCulture, out currentNumber);
+                        if (!parsed) //Jumps backs to the start of the iteration 
+                            continue;
+                        else //Add elements to list and
+                        {
+                            numbersArray.Add(currentNumber);
+                            sum += currentNumber;
+                            ++parseNumberCount;//Perhaps exsessive in this stage
+                        }
+                        Console.WriteLine(paddedLabel + currentNumber); //Prints out inputvalue for user if correct
+                        // Debug.Assert(i < numbers.Length - 1); //Remainer just for deeper studies in the subject
                     }
-                    else continue;
-                    
-                    // Debug.Assert(i < numbers.Length - 1);
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                        throw;
+                    }
+
                 }
-                catch (Exception e)
+                //Assigning highest and smallest value if element in list is not zero
+                if (numbersArray.Count != 0)
                 {
-                    Console.WriteLine(e);
-                    throw;
+                    maxValue = numbersArray.Max();
+                    minValue = numbersArray.Min();
+
+                    //Printing out evaluated values
+                    Console.WriteLine(line); Console.WriteLine();
+                    Console.WriteLine($"Högsta värdet: {numbersArray.Max()}");//Max value  
+                    Console.WriteLine($"Minsta värdet: {numbersArray.Min()}");//Min value
+                    Console.WriteLine("Medelvärdet för arrayen är: " + string.Format($"{(sum / parseNumberCount):0.00}")); //Middle value
                 }
+                else Console.WriteLine("Här har det inte skrivits in nått värde alls. Försök igen!");//ERROR message
+                Console.WriteLine("\nTryck på valfri tangent för att köra programmet en gång till.");
 
+                Console.ReadKey();
             }
-            Console.WriteLine("-------------------------------------------\n");
-            Console.WriteLine($"Högsta värdet: {numbers.Max()}");//Max value  
-            Console.WriteLine($"Minsta värdet: {numbers.Min()}");//Min value
-            Console.WriteLine("Medelvärdet för arrayen är: " + string.Format($"{(middlevalue / numbers.Length):0.00}")); //Middle value
-            Console.ReadKey();
-
         }
     }
 }
